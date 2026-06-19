@@ -1,0 +1,30 @@
+#ignore this in github
+
+# environment variables
+.env
+
+#Cache folders
+__pycache__/
+
+CheatSheet
+pyproject_311.toml
+main_deprecated.py
+
+
+tools/Binance_price_data_tool_DEPRECATED.py
+tools/Dune_analytics_onchain_tool_DEPRECATED.py
+tools/Search_n_Scraper_DEPRECATED.py
+tools/search_tools.py
+
+memory/ 
+
+reports/
+
+# Sui deploy output (contains object IDs, keep in .env not in git)
+contracts/deploy_result.json
+# Move build artifacts (generated, not source)
+contracts/build/
+
+# Claude Code local settings (contain machine-specific paths)
+.claude/settings.local.json
+.claude/settings.json

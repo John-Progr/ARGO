@@ -1,0 +1,77 @@
+Step 1 — Run the agent 3x daily for 7 days
+Each session run: "py auto_runner_evaluator.py"
+Do this at three times each day:
+8:00 AM  → py auto_runner.py
+12:00 PM → py auto_runner.py
+8:00 PM  → py auto_runner.py
+Each call produces 2 reports (1 LOW + 1 HIGH). After 7 days you'll have ~42 reports.
+
+---------------------------------------------------------------------------------
+Step 2 — Run evaluator from Day 2 onwards
+From Day 2, run the evaluator each morning to score the previous day's runs: "py evaluator.py"
+It will skip reports that are too recent and score ones that have passed the 24h window. Output looks like:
+✅ BUY @ $0.7350 → price $0.7680 after 1d
+❌ SELL @ $0.7400 → price $0.7550 after 1d
+⏳ Too early to evaluate SUI_BUY_HIGH_20260610_200000.json
+
+---------------------------------------------------------------------------------
+Step 3 — End of week, run final evaluation
+On Day 7 run:
+bashpy evaluator.py
+This gives you the full summary:
+LOW FIDELITY  — 21 evaluations
+  Directional Accuracy: 61.9%
+  TP1 Hit Rate:         47.6%
+  TP2 Hit Rate:         28.6%
+  Stop Loss Rate:       19.0%
+
+HIGH FIDELITY — 21 evaluations
+  Directional Accuracy: 71.4%
+  TP1 Hit Rate:         57.1%
+  TP2 Hit Rate:         33.3%
+  Stop Loss Rate:       14.3%
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Summary of the week
+Day 1  → py auto_runner.py  ×3  (collect only)
+Day 2  → py auto_runner.py  ×3  + py evaluator.py ×1
+Day 3  → py auto_runner.py  ×3  + py evaluator.py ×1
+Day 4  → py auto_runner.py  ×3  + py evaluator.py ×1
+Day 5  → py auto_runner.py  ×3  + py evaluator.py ×1
+Day 6  → py auto_runner.py  ×3  + py evaluator.py ×1
+Day 7  → py auto_runner.py  ×3  + py evaluator.py ×1 (final)
+Two commands. That's all you need to run each day.
+
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Entry: $0.73–$0.74 --> The trader plans to buy within this price range.
+Stop Loss (SL): $0.70 --> If the price falls to $0.70, the position is closed to limit losses.
+Because this is a BUY trade, the stop loss is correctly placed BELOW the entry price.
+
+
+BUY --> SL < Entry (you profit if the price RISES)
+SELL --> SL > Entry (you profit if the price FALLS)
+ Example SELL setup:
+'''
+Entry: $0.74–$0.73
+SL: $0.78
+TP1: $0.70
+TP2: $0.68
+'''
+
+
+Take Profit 1 (TP1): $0.78 --> First profit target where the trader may take partial profits.
+Take Profit 2 (TP2): $0.80 --> Second profit target where additional or remaining profits may be taken.
+
+
+Risk/Reward Example
+
+If entry is approximately $0.74:
+
+Risk per unit: $0.74 − $0.70 = $0.04
+Reward to TP1: $0.78 − $0.74 = $0.04 (about 1:1 risk-reward)
+Reward to TP2: $0.80 − $0.74 = $0.06 (about 1:1.5 risk-reward)
+
+In plain terms, the setup expects the asset to rise from around $0.73–$0.74 toward $0.78–$0.80, while limiting downside risk with a stop at $0.70.
